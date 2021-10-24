@@ -43,15 +43,18 @@
         </div>
         <div class="d-flex bd-highlight">
             <div class="p-2 flex-grow-1 bd-highlight">
-                <table class="table" id="tablaProductosComp">
+                <table class="table">
                     <thead class="">
                         <tr>
                             <th>Nombre</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
+                            <th>Numero</th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>
+                    <tbody id="tablaProductosComp">
+                    </tbody>
                 </table>
                 <H2>TOTAL:</H2>
                 <p id="total">0</p>

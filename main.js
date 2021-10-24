@@ -125,32 +125,36 @@ $(document).ready(function () {
       function agregarProd(idv) {
           // arrayId.push(idv);
           arrayObjeto.push(objeto);
-          // console.log("esto"+arrayId);
           console.log(arrayObjeto);
           document.getElementById("total").innerHTML = ""+total;
-          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td>"+numerofila+"<td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
-      }
+          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr id='borrarfila"+numerofila+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target' value='"+objeto.cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +objeto.id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
+          numerofila++;
+        }
 
 //Keyup de cantidad
       $(document).on("keyup", "#target", function () { 
-        valor = $("#target").val();
+        valor = parseInt($("#target").val());
         fila = $(this).closest("tr");
-        id = fila.find("td:eq(0)").text();
-        console.log(id);
+        idproducto = parseInt(fila.find("td:eq(4)").text());
+        for (i= 0 ; i < arrayObjeto.length ; i++)
+        {
+          if(arrayObjeto[i].id == idproducto)
+          {
+            arrayObjeto[i].cantidad = valor;
+          }
+        }
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
     $(document).on("click", ".btnEliminarComp", function () { 
     fila = $(this).closest("tr");
     precio2 = parseInt(fila.find("td:eq(1)").text());
-    num = fila.find("td:eq(2)").text();
-    num2 = fila.find("td:eq(3)").text();
+    numeroparaborrarfila = fila.find("td:eq(3)").text();
     total = total - precio2;
     document.getElementById("total").innerHTML = ""+total;
-    variable = "borrar"+num;
-    variable2 = "borra"+num2;
+    borrarfila = "borrarfila"+numeroparaborrarfila;
       
-      let hijo= document.getElementById(variable2);
+      let hijo= document.getElementById(borrarfila);
       hijo.parentNode.removeChild(hijo);
       arrayId.pop();
     });
