@@ -68,6 +68,7 @@ $(document).ready(function () {
   //AGREGAR PROD
   // bandu=0;
   var cantidad=1;
+  var numerofila=1;
   $(document).on("click", ".btnAgregarVenta", function () {
 
         fila = $(this).closest("tr");
@@ -127,15 +128,15 @@ $(document).ready(function () {
           // console.log("esto"+arrayId);
           console.log(arrayObjeto);
           document.getElementById("total").innerHTML = ""+total;
-          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
+          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td>"+numerofila+"<td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
       }
 
 //Keyup de cantidad
       $(document).on("keyup", "#target", function () { 
         valor = $("#target").val();
         fila = $(this).closest("tr");
-        id = fila.find("td:eq(3)").text();
-
+        id = fila.find("td:eq(0)").text();
+        console.log(id);
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
