@@ -7,7 +7,12 @@ $(document).ready(function () {
   var precio;
   tablaProductosComp=0;
   opcion = 4;
-
+  var objeto = {
+    id: 0,
+    nombre: 'nombre',
+    precio: 'precio',
+    cantidad: 'cantidad',
+  };
 
   tablaProductos = $("#tablaProductos").DataTable({
       ajax: {
@@ -123,14 +128,21 @@ $(document).ready(function () {
       });
       function agregarProd(idv) {
           // arrayId.push(idv);
-          $(".borrarfila").remove();
-          arrayObjeto.push(objeto);
-          console.log(arrayObjeto);
-          document.getElementById("total").innerHTML = ""+total;
-          for (i= 0 ; i < arrayObjeto.length ; i++)
-          {
-            tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr class='borrarfila' id='borrarfila"+numerofila+"'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <input id='target' value='"+arrayObjeto[i].cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +arrayObjeto[i].id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
+          if(arrayObjeto.length === 0){
+            arrayObjeto.push(objeto); 
+          }else{
+            for(i = 0; i < arrayObjeto.length ; i++){
+              if(arrayObjeto[i].id != objeto.id){
+                arrayObjeto.push(objeto); 
+                console.log('repetido  '+ arrayObjeto[i].id+ '   ' + objeto.id)
+              }
+            }
           }
+            // arrayObjeto.push(objeto); 
+            console.log(arrayObjeto)
+
+          document.getElementById("total").innerHTML = ""+total;
+          reloadTable()
         }
 
 //Keyup de cantidad
@@ -156,10 +168,26 @@ $(document).ready(function () {
     total = total - precio2;
     document.getElementById("total").innerHTML = ""+total;
     borrarfila = "borrarfila"+numeroparaborrarfila;
-      
-      let hijo= document.getElementById(borrarfila);
-      hijo.parentNode.removeChild(hijo);
-      arrayId.pop();
+
+    idproducto = parseInt(fila.find("td:eq(4)").text());
+    for (i= 0 ; i < arrayObjeto.length ; i++)
+    {
+      if(arrayObjeto[i].id == idproducto)
+      {
+        if (arrayObjeto.length == 1)
+        {
+          arrayObjeto = [];
+        }
+        arrayObjeto.splice(i,1);
+        console.log(arrayObjeto);
+        reloadTable();
+
+      }
+    }
+    //let hijo= document.getElementById(borrarfila);
+    //hijo.parentNode.removeChild(hijo);
+    //arrayObjeto.pop(); 
+    reloadTable();
     });
 
   //FINALIZAR
@@ -185,5 +213,12 @@ $(document).ready(function () {
 
   });
 
+  function reloadTable(){
+    $(".borrarfila").remove();
+    for (i= 0 ; i < arrayObjeto.length ; i++)
+    {
+      tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr class='borrarfila' id='borrarfila"+numerofila+"'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <input id='target' value='"+arrayObjeto[i].cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +arrayObjeto[i].id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
+    }
+  }
 
 });
