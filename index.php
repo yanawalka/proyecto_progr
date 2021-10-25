@@ -49,7 +49,6 @@
                             <th>Nombre</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
-                            <th>Numero2</th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>

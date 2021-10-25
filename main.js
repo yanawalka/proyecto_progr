@@ -7,7 +7,6 @@ $(document).ready(function () {
   var precio;
   tablaProductosComp=0;
   opcion = 4;
-  var cantidad2= 1;
 
 
   tablaProductos = $("#tablaProductos").DataTable({
@@ -67,7 +66,7 @@ $(document).ready(function () {
   }
 
   //AGREGAR PROD
-  bandu=0;
+  // bandu=0;
   var cantidad=1;
   $(document).on("click", ".btnAgregarVenta", function () {
 
@@ -78,69 +77,65 @@ $(document).ready(function () {
         idMarca = fila.find("td:eq(3)").text();
         precio = parseInt(fila.find("td:eq(4)").text());
         total = total + precio;
-        if (bandu==0)
-        {
+        // if (bandu==0)
+        // {
           objeto = {
             id: idv,
             nombre: nombre,
             precio: precio,
-            canitdad: cantidad,
+            cantidad: cantidad,
           };
           agregarProd(idv);
-          bandu=1;
-          cantidad2++;
-          cantidad++;
-        }
-        else {
-          banduint=0;
-          re=0;
-          cantidad=1;
-          while (re<arrayId.length && banduint==0)
-          {
-              if(arrayId[re]==idv)
-              {
-                banduint=2;
-              }
-              re++;
-          }
-          if (banduint==2)
-          {
-            for (re=0 ; re<arrayId.length ; re++)
-            {
-              if(arrayId[re]==idv)
-              {
-                cantidad++;
-              }
-            }
-          }
-          if (bandu==1)
-          {
-            objeto = {
-              id: idv,
-              nombre: nombre,
-              precio: precio,
-            };
-            agregarProd(idv);
-            cantidad2++;
-          }
-        }
+        // }
+        // else {
+        //   banduint=0;
+        //   re=0;
+        //   cantidad=1;
+        //   while (re<arrayId.length && banduint==0)
+        //   {
+        //       if(arrayId[re]==idv)
+        //       {
+        //         banduint=2;
+        //       }
+        //       re++;
+        //   }
+        //   if (banduint==2)
+        //   {
+        //     for (re=0 ; re<arrayId.length ; re++)
+        //     {
+        //       if(arrayId[re]==idv)
+        //       {
+        //         cantidad++;
+        //       }
+        //     }
+        //   }
+        //   if (bandu==1)
+        //   {
+        //     objeto = {
+        //       id: idv,
+        //       nombre: nombre,
+        //       precio: precio,
+        //     };
+            // agregarProd(idv);
+        //   }
+        // }
       });
 
       function agregarProd(idv) {
-          arrayId.push(idv);
+          // arrayId.push(idv);
           arrayObjeto.push(objeto);
           // console.log("esto"+arrayId);
           console.log(arrayObjeto);
           document.getElementById("total").innerHTML = ""+total;
-          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad2+"'><tr id='borrar"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td> <td>" +cantidad2 +"</td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
+          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
       }
 
+//Keyup de cantidad
       $(document).on("keyup", "#target", function () { 
-        num2 = $("#target").val();
+        valor = $("#target").val();
         fila = $(this).closest("tr");
+        id = fila.find("td:eq(3)").text();
 
-
-        console.log(num2);
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
