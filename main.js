@@ -124,11 +124,14 @@ $(document).ready(function () {
 
       function agregarProd(idv) {
           // arrayId.push(idv);
+          $(".borrarfila").remove();
           arrayObjeto.push(objeto);
           console.log(arrayObjeto);
           document.getElementById("total").innerHTML = ""+total;
-          tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr id='borrarfila"+numerofila+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target' value='"+objeto.cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +objeto.id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
-          numerofila++;
+          for (i= 0 ; i < arrayObjeto.length ; i++)
+          {
+            tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr class='borrarfila' id='borrarfila"+numerofila+"'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <input id='target' value='"+arrayObjeto[i].cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +arrayObjeto[i].id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
+          }
         }
 
 //Keyup de cantidad
