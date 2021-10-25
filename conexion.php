@@ -5,7 +5,7 @@ class Conexion{
         define('servidor', 'localhost');
         define('nombre_bd', 'crud');
         define('usuario', 'root');
-        define('password', '');
+        define('password', 'Del1al6!');
 
         $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET Names utf8");
 
