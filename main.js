@@ -121,7 +121,6 @@ $(document).ready(function () {
         //   }
         // }
       });
-
       function agregarProd(idv) {
           // arrayId.push(idv);
           $(".borrarfila").remove();
@@ -136,8 +135,8 @@ $(document).ready(function () {
 
 //Keyup de cantidad
       $(document).on("keyup", "#target", function () { 
-        valor = parseInt($("#target").val());
         fila = $(this).closest("tr");
+        valor = parseInt(fila.find("#target").val());
         idproducto = parseInt(fila.find("td:eq(4)").text());
         for (i= 0 ; i < arrayObjeto.length ; i++)
         {
@@ -146,6 +145,7 @@ $(document).ready(function () {
             arrayObjeto[i].cantidad = valor;
           }
         }
+        console.log(arrayObjeto);
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
