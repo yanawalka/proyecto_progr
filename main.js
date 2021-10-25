@@ -123,12 +123,14 @@ $(document).ready(function () {
 
       function agregarProd(idv) {
           // arrayId.push(idv);
+          valor = $("#target").val(objeto.cantidad);
           arrayObjeto.push(objeto);
           // console.log("esto"+arrayId);
-          console.log(arrayObjeto);
           document.getElementById("total").innerHTML = ""+total;
           tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tbody id='borra"+cantidad+"'><td>" +objeto.nombre +" </td> <td>" +objeto.precio +"</td><td> <input id='target'> </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr></tbody>";
-      }
+          valor = $("#target").val(objeto.cantidad);
+          console.log(objeto)
+        }
 
 //Keyup de cantidad
       $(document).on("keyup", "#target", function () { 
