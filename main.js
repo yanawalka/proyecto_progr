@@ -58,8 +58,6 @@ $(document).ready(function () {
       ],
     });
 
-
-  //AGREGAR CLI
   $(document).on("click", ".btnAgregarCli", function () {
 
     fila = $(this).closest("tr");
@@ -235,7 +233,7 @@ $(document).ready(function () {
     {
       totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);
     }
-    document.getElementById("total").innerHTML = ""+totalPorProducto-descuento;
+    document.getElementById("total").innerHTML = totalPorProducto-descuento;
     // console.log(totalPorProducto+ '      ' + arrayObjeto.length);
   }
 
@@ -246,9 +244,9 @@ $(document).ready(function () {
 
      //Keyup de descuento
     $(document).on("keyup", "#descuentito", function () {
-      valor = $("#descuentito").val();
-      descuento = descuento + valor;
-      console.log(valor);
+      valordescuento = $("#descuentito").val();
+      descuento = valordescuento;
+      console.log(valordescuento);
       reloadDescuento();
       reloadTotal();
     });
@@ -260,9 +258,8 @@ $(document).ready(function () {
 
      //Keyup de recargo
     $(document).on("keyup", "#recargito", function () {
-      valor = $("#recargito").val();
-      console.log(valor);
-      recargo = recargo + valor;
+      valorrecargo = $("#recargito").val();
+      recargo =  valorrecargo;
       reloadRecargo();
       reloadTotal();
     });
