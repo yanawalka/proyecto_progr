@@ -56,8 +56,6 @@ $(document).ready(function () {
       ],
     });
 
-
-  //AGREGAR CLI
   $(document).on("click", ".btnAgregarCli", function () {
 
     fila = $(this).closest("tr");
@@ -73,7 +71,6 @@ $(document).ready(function () {
   }
 
   //AGREGAR PROD
-  // bandu=0;
   var cantidad = 1;
   var numerofila = 1;
   $(document).on("click", ".btnAgregarVenta", function () {
@@ -141,25 +138,37 @@ $(document).ready(function () {
 
   //FINALIZAR
   $(document).on("click", "#btnFinalizarComp", function () {
-    let numero = arrayId.length;
-
-    for (let i = 0; i < numero; i++) {
-      
-      let idProd = arrayId[i];
-      
+    let numero = arrayObjeto.length;
+      //CABECERA
       $.ajax({
         url: "consProd.php",
         type: "POST",
         datatype: "JSON",
         data: {
-          idProd: idProd,
+          id: id,
+          cantidad:cantidad
         },
         success: function (data) {
-          console.log(idProd);
+          
+          //DETALLE
+          for (let i = 0; i < numero; i++) {
+            let id = arrayObjeto[i].id;
+            let cantidad = arrayObjeto[i].cantidad;
+            $.ajax({
+              url: "consProd.php",
+              type: "POST",
+              datatype: "JSON",
+              data: {
+                id: id,
+                cantidad:cantidad
+              },
+              success: function (data) {
+                console.log(idProd);
+              },
+            });
+          }
         },
       });
-    }
-
   });
 
   //Keyup de cantidad
