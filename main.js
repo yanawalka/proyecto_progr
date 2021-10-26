@@ -2,20 +2,20 @@ $(document).ready(function () {
   var total = 0;
   var id, opcion;
   var arrayObjeto = [];
-  var arrayId = [];
   var fila;
   var precio;
-  tablaProductosComp=0;
-  opcion = 4;
+  var recargo=0;
+  var descuento=0;
+  tablaProductosComp=0
   var objeto = {
     id: 0,
     nombre: 'nombre',
     precio: 'precio',
     cantidad: 'cantidad',
   };
-  var totalPorProducto = 0;
   var banderita = true;
 
+  opcion = 4;
   tablaProductos = $("#tablaProductos").DataTable({
       ajax: {
         url: "consProd.php",
@@ -24,11 +24,12 @@ $(document).ready(function () {
         dataSrc: "",
       },
       columns: [
-        { data: "id" },
-        { data: "codigo" },
-        { data: "nombre" },
-        { data: "idMarca" },
-        { data: "precio" },
+        { data: "proid" },
+        { data: "procodigo" },
+        { data: "pronombre" },
+        { data: "maid" },
+        { data: "prostockactual" },
+        { data: "proprecio" },
         { defaultContent:
             "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnAgregarVenta'><i class='material-icons'>add_shopping_cart</i></button>",
         },
@@ -36,8 +37,8 @@ $(document).ready(function () {
       ],
     });
 
-    opcion = 4;
-    tablaPersonas = $("#tablaPersonas").DataTable({
+  opcion = 4;
+  tablaPersonas = $("#tablaPersonas").DataTable({
       ajax: {
         url: "consCliente.php",
         method: "POST", //usamos el metodo POST
@@ -45,10 +46,11 @@ $(document).ready(function () {
         dataSrc: "",
       },
       columns: [
-        { data: "id" },
-        { data: "nombre" },
-        { data: "usuario" },
-        { data: "email" },
+        { data: "clid" },
+        { data: "clnom" },
+        { data: "clemail" },
+        { data: "cldire" },
+        { data: "cltele" },
         { defaultContent:
             "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnAgregarCli'><i class='material-icons'>done</i></button>",
         },
@@ -73,18 +75,13 @@ $(document).ready(function () {
   }
 
   //AGREGAR PROD
-  // bandu=0;
   var cantidad = 1;
   var numerofila = 1;
   $(document).on("click", ".btnAgregarVenta", function () {
-
-
         fila = $(this).closest("tr");
         idv = parseInt(fila.find("td:eq(0)").text());
-        codigo = parseInt(fila.find("td:eq(1)").text());
         nombre = fila.find("td:eq(2)").text();
-        idMarca = fila.find("td:eq(3)").text();
-        precio = parseInt(fila.find("td:eq(4)").text());
+        precio = parseInt(fila.find("td:eq(5)").text());
 
           objeto = {
             id: idv,
@@ -109,6 +106,8 @@ $(document).ready(function () {
             agregarProd(idv)
           }          
           banderita = true;
+          reloadRecargo();
+          reloadDescuento(); 
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
@@ -132,33 +131,68 @@ $(document).ready(function () {
         arrayObjeto.splice(i,1);
         console.log(arrayObjeto);
         reloadTable();
-        reloadTotal()
+        reloadTotal();
       }
     }
     reloadTable();
     });
 
-
   //FINALIZAR
   $(document).on("click", "#btnFinalizarComp", function () {
-    let numero = arrayId.length;
+    //CREACION DE CABEZA DE VENTA
+    var opcion = 5;
+    $.ajax({
+      url:"consProd.php",
+      type:"POST",
+      datatype:"JSON",
+      data: {
+        opcion:opcion,
+      },
+      success: function (data) {
+        //CREACION DE DETALLE DE VENTA
+        result = JSON.parse(data);
+        factura = result[0].factura;
+        let orden = 1;
+        for (let i = 0; i < arrayObjeto.length; i++) {
 
-    for (let i = 0; i < numero; i++) {
-      
-      let idProd = arrayId[i];
-      
-      $.ajax({
-        url: "consProd.php",
-        type: "POST",
-        datatype: "JSON",
-        data: {
-          idProd: idProd,
-        },
-        success: function (data) {
-          console.log(idProd);
-        },
-      });
-    }
+          let id = arrayObjeto[i].id;
+          let precio = arrayObjeto[i].precio;
+          let cantidad = arrayObjeto[i].cantidad;
+
+          opcion = 6;
+            $.ajax({
+              url: "consProd.php",
+              type: "POST",
+              datatype: "JSON",
+              data: {
+                opcion:opcion,
+                id:id,
+                precio:precio,
+                cantidad:cantidad,
+                orden:orden,
+                factura:factura
+              },
+              success: function (data) {
+                //ACTUALIZACION DEL TOTAL DE LA CABEZA DE LA VENTA
+                opcion = 7;
+                $.ajax({
+                  url: "consProd.php",
+                  type: "POST",
+                  datatype: "JSON",
+                  data: {
+                    opcion:opcion,
+                    factura:factura
+                  },
+                  success: function (data) {
+                    console.log("Compra Finalizada");
+                  }
+                })
+              },
+            });
+            orden++;
+        }
+      }
+    });
 
   });
 
@@ -179,7 +213,7 @@ $(document).ready(function () {
 
   //FUNCION PARA AGREGAR PRODUCTO
   function agregarProd(idv) {
-    arrayObjeto.push(objeto); 
+    arrayObjeto.push(objeto);
     reloadTotal();
     reloadTable();
     }
@@ -196,12 +230,40 @@ $(document).ready(function () {
   //FUNCION PARA CARGAR EL TOTAL DE LA VENTA
   function reloadTotal(){
     $("total").remove();
-    totalPorProducto = 0;
+    var totalPorProducto = 0;
     for (i= 0 ; i < arrayObjeto.length ; i++)
     {
       totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);
     }
-    document.getElementById("total").innerHTML = ""+totalPorProducto;
-    console.log(totalPorProducto+ '      ' + arrayObjeto.length);
+    document.getElementById("total").innerHTML = ""+totalPorProducto-descuento;
+    // console.log(totalPorProducto+ '      ' + arrayObjeto.length);
   }
+
+    //FUNCION PARA MOSTRAR EL DESCUENTO DE LA VENTA
+    function reloadDescuento(){
+      document.getElementById("descuento").innerHTML = "DESCUENTO:<input style='margin-left: 15px' id='descuentito' value='"+descuento+"'>";
+    }
+
+     //Keyup de descuento
+    $(document).on("keyup", "#descuentito", function () {
+      valor = $("#descuentito").val();
+      descuento = descuento + valor;
+      console.log(valor);
+      reloadDescuento();
+      reloadTotal();
+    });
+
+    //FUNCION PARA MOSTRAR EL RECARGO DE LA VENTA
+    function reloadRecargo(){
+      document.getElementById("recargo").innerHTML = "RECARGO:<tr><td><input style='margin-left: 34px' id='recargito' value='"+recargo+"'></td><tr>";
+    }
+
+     //Keyup de recargo
+    $(document).on("keyup", "#recargito", function () {
+      valor = $("#recargito").val();
+      console.log(valor);
+      recargo = recargo + valor;
+      reloadRecargo();
+      reloadTotal();
+    });
 });

@@ -43,7 +43,7 @@ switch($opcion){
         // break;        
 
     case 4:    
-        $consulta = "SELECT * FROM personas";
+        $consulta = "SELECT * FROM clientes";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();        
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);

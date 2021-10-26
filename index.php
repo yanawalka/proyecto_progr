@@ -56,12 +56,11 @@
                     <tbody id="tablaProductosComp">
                     </tbody>
                 </table>
+                <p id="descuento"></p>
+                <p id="recargo"></p>
                 <H2>TOTAL:</H2>
                 <p id="total">0</p>
                 <button class="btn btn-danger" id="btnFinalizarComp">Finalizar Venta</button>
-                <button class="btn btn-info" id="btnFinalizarComp2">Descuento</button>
-                <button class="btn btn-dark" id="btnFinalizarComp3">Recargo</button>
-
             </div>
 
 
@@ -90,6 +89,7 @@
                                                 <th>Codigo</th>
                                                 <th>Nombre</th>
                                                 <th>Marca</th>
+                                                <th>Stock</th>
                                                 <th>Precio</th>
                                                 <th>Acciones</th>
                                             </tr>
@@ -112,8 +112,9 @@
                                             <tr>
                                                 <th>Id</th>
                                                 <th>Nombre</th>
-                                                <th>Usuario</th>
                                                 <th>Email</th>
+                                                <th>Direccion</th>
+                                                <th>Telefono</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
