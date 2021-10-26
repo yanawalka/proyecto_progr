@@ -93,10 +93,10 @@ $(document).ready(function () {
             cantidad: cantidad,
           };
 
-          
+
           if(arrayObjeto.length === 0){
             agregarProd(idv)
-            banderita = false; 
+            banderita = false;
           }else{
             for(i = 0; i < arrayObjeto.length ; i++){
               if(arrayObjeto[i].id === objeto.id){
