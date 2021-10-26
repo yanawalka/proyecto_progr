@@ -13,6 +13,8 @@ $(document).ready(function () {
     precio: 'precio',
     cantidad: 'cantidad',
   };
+  var totalPorProducto = 0;
+  var banderita = true;
 
   tablaProductos = $("#tablaProductos").DataTable({
       ajax: {
@@ -72,9 +74,10 @@ $(document).ready(function () {
 
   //AGREGAR PROD
   // bandu=0;
-  var cantidad=1;
-  var numerofila=1;
+  var cantidad = 1;
+  var numerofila = 1;
   $(document).on("click", ".btnAgregarVenta", function () {
+
 
         fila = $(this).closest("tr");
         idv = parseInt(fila.find("td:eq(0)").text());
@@ -82,82 +85,30 @@ $(document).ready(function () {
         nombre = fila.find("td:eq(2)").text();
         idMarca = fila.find("td:eq(3)").text();
         precio = parseInt(fila.find("td:eq(4)").text());
-        total = total + precio;
-        // if (bandu==0)
-        // {
+
           objeto = {
             id: idv,
             nombre: nombre,
             precio: precio,
             cantidad: cantidad,
           };
-          agregarProd(idv);
-        // }
-        // else {
-        //   banduint=0;
-        //   re=0;
-        //   cantidad=1;
-        //   while (re<arrayId.length && banduint==0)
-        //   {
-        //       if(arrayId[re]==idv)
-        //       {
-        //         banduint=2;
-        //       }
-        //       re++;
-        //   }
-        //   if (banduint==2)
-        //   {
-        //     for (re=0 ; re<arrayId.length ; re++)
-        //     {
-        //       if(arrayId[re]==idv)
-        //       {
-        //         cantidad++;
-        //       }
-        //     }
-        //   }
-        //   if (bandu==1)
-        //   {
-        //     objeto = {
-        //       id: idv,
-        //       nombre: nombre,
-        //       precio: precio,
-        //     };
-            // agregarProd(idv);
-        //   }
-        // }
-      });
-      function agregarProd(idv) {
-          // arrayId.push(idv);
+
+          
           if(arrayObjeto.length === 0){
-            arrayObjeto.push(objeto); 
+            agregarProd(idv)
+            banderita = false; 
           }else{
             for(i = 0; i < arrayObjeto.length ; i++){
-              if(arrayObjeto[i].id != objeto.id){
-                arrayObjeto.push(objeto); 
-                console.log('repetido  '+ arrayObjeto[i].id+ '   ' + objeto.id)
+              if(arrayObjeto[i].id === objeto.id){
+                alert('Tu objeto ya existe en la tabla');
+                banderita = false;
               }
             }
           }
-            // arrayObjeto.push(objeto); 
-            console.log(arrayObjeto)
-
-          document.getElementById("total").innerHTML = ""+total;
-          reloadTable()
-        }
-
-//Keyup de cantidad
-      $(document).on("keyup", "#target", function () { 
-        fila = $(this).closest("tr");
-        valor = parseInt(fila.find("#target").val());
-        idproducto = parseInt(fila.find("td:eq(4)").text());
-        for (i= 0 ; i < arrayObjeto.length ; i++)
-        {
-          if(arrayObjeto[i].id == idproducto)
-          {
-            arrayObjeto[i].cantidad = valor;
-          }
-        }
-        console.log(arrayObjeto);
+          if(banderita){
+            agregarProd(idv)
+          }          
+          banderita = true;
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
@@ -181,14 +132,12 @@ $(document).ready(function () {
         arrayObjeto.splice(i,1);
         console.log(arrayObjeto);
         reloadTable();
-
+        reloadTotal()
       }
     }
-    //let hijo= document.getElementById(borrarfila);
-    //hijo.parentNode.removeChild(hijo);
-    //arrayObjeto.pop(); 
     reloadTable();
     });
+
 
   //FINALIZAR
   $(document).on("click", "#btnFinalizarComp", function () {
@@ -213,6 +162,29 @@ $(document).ready(function () {
 
   });
 
+  //Keyup de cantidad
+  $(document).on("keyup", "#target", function () { 
+    fila = $(this).closest("tr");
+    valor = parseInt(fila.find("#target").val());
+    idproducto = parseInt(fila.find("td:eq(4)").text());
+    for (i= 0 ; i < arrayObjeto.length ; i++)
+    {
+      if(arrayObjeto[i].id == idproducto)
+      {
+        arrayObjeto[i].cantidad = valor;
+      }
+    }
+    reloadTotal();
+  });
+
+  //FUNCION PARA AGREGAR PRODUCTO
+  function agregarProd(idv) {
+    arrayObjeto.push(objeto); 
+    reloadTotal();
+    reloadTable();
+    }
+
+    //FUNCION PARA CARGAR LA TABLA
   function reloadTable(){
     $(".borrarfila").remove();
     for (i= 0 ; i < arrayObjeto.length ; i++)
@@ -221,4 +193,15 @@ $(document).ready(function () {
     }
   }
 
+  //FUNCION PARA CARGAR EL TOTAL DE LA VENTA
+  function reloadTotal(){
+    $("total").remove();
+    totalPorProducto = 0;
+    for (i= 0 ; i < arrayObjeto.length ; i++)
+    {
+      totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);
+    }
+    document.getElementById("total").innerHTML = ""+totalPorProducto;
+    console.log(totalPorProducto+ '      ' + arrayObjeto.length);
+  }
 });
