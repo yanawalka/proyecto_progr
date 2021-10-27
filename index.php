@@ -15,7 +15,7 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <!-- CSS personalizado -->
     <!-- <link rel="stylesheet" href="../../src/crudsTable.css"> -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="index.css">
     <!-- navbar -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -39,6 +39,10 @@
                     </tr>
                 </thead>
             </table>
+        <div class="descuento">
+            <h3>DESCUENTO:</h3>
+            <input style='margin-left: 15px' id="descuentito" value='0'>
+        </div>
 
         </div>
         <div class="d-flex bd-highlight">
@@ -56,8 +60,6 @@
                     <tbody id="tablaProductosComp">
                     </tbody>
                 </table>
-                <p id="descuento"></p>
-                <p id="recargo"></p>
                 <H2>TOTAL:</H2>
                 <p id="total">0</p>
                 <button class="btn btn-danger" id="btnFinalizarComp">Finalizar Venta</button>
@@ -128,6 +130,7 @@
         </div>
     </div>
     </div>
+
 
 
 

@@ -14,6 +14,7 @@ $(document).ready(function () {
     cantidad: 'cantidad',
   };
   var banderita = true;
+  var valordescuento = 1;
 
   opcion = 4;
   tablaProductos = $("#tablaProductos").DataTable({
@@ -226,41 +227,37 @@ $(document).ready(function () {
   }
 
   //FUNCION PARA CARGAR EL TOTAL DE LA VENTA
-  function reloadTotal(){
+  function reloadTotal(valordescuento){
     $("total").remove();
     var totalPorProducto = 0;
     for (i= 0 ; i < arrayObjeto.length ; i++)
     {
       totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);
     }
-    document.getElementById("total").innerHTML = totalPorProducto-descuento;
-    // console.log(totalPorProducto+ '      ' + arrayObjeto.length);
-  }
-
-    //FUNCION PARA MOSTRAR EL DESCUENTO DE LA VENTA
-    function reloadDescuento(){
-      document.getElementById("descuento").innerHTML = "DESCUENTO:<input style='margin-left: 15px' id='descuentito' value='"+descuento+"'>";
+    if(valordescuento != undefined){    
+      valordescuento = (valordescuento*totalPorProducto)/100;
+      totalPorProducto = totalPorProducto - valordescuento;
     }
+    if(totalPorProducto === 0 || totalPorProducto === 'NaN' || totalPorProducto === ''){
+        alert("Agregue una cantidad de productos correcta")
+    }else{
+      document.getElementById("total").innerHTML = totalPorProducto;
+    }
+
+  }
 
      //Keyup de descuento
     $(document).on("keyup", "#descuentito", function () {
-      valordescuento = $("#descuentito").val();
+      valordescuento = parseInt($("#descuentito").val());
       descuento = valordescuento;
-      console.log(valordescuento);
-      reloadDescuento();
-      reloadTotal();
+      console.log("valordescuento");
+      reloadTotal(valordescuento);
     });
-
-    //FUNCION PARA MOSTRAR EL RECARGO DE LA VENTA
-    function reloadRecargo(){
-      document.getElementById("recargo").innerHTML = "RECARGO:<tr><td><input style='margin-left: 34px' id='recargito' value='"+recargo+"'></td><tr>";
-    }
 
      //Keyup de recargo
     $(document).on("keyup", "#recargito", function () {
       valorrecargo = $("#recargito").val();
       recargo =  valorrecargo;
-      reloadRecargo();
       reloadTotal();
     });
 });
