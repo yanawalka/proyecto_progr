@@ -238,7 +238,7 @@ $(document).ready(function () {
       valordescuento = (valordescuento*totalPorProducto)/100;
       totalPorProducto = totalPorProducto - valordescuento;
     }
-    if(totalPorProducto === 0 || totalPorProducto === 'NaN' || totalPorProducto === ''){
+    if(totalPorProducto === 0 || totalPorProducto == NaN || totalPorProducto === ''){
         alert("Agregue una cantidad de productos correcta")
     }else{
       document.getElementById("total").innerHTML = totalPorProducto;
