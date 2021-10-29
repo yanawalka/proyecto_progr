@@ -3,11 +3,8 @@ $(document).ready(function () {
   var total = 0;
   var id, opcion;
   var arrayObjeto = [];
-  console.log(arrayObjeto)
   var fila;
   var precio;
-  var recargo=0;
-  var descuento=0;
   tablaProductosComp=0
   var cliente = '';
   var objeto = {
@@ -22,6 +19,26 @@ $(document).ready(function () {
 
   opcion = 4;
   tablaProductos = $("#tablaProductos").DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+        "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Productos",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+          }
+      },
       ajax: {
         url: "consProd.php",
         method: "POST", //usamos el metodo POST
@@ -44,6 +61,26 @@ $(document).ready(function () {
 
   opcion = 4;
   tablaPersonas = $("#tablaPersonas").DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Clientes",
+        "infoFiltered": "(Filtrado de _MAX_ total Cliente)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Clientes",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+      },
       ajax: {
         url: "consCliente.php",
         method: "POST", //usamos el metodo POST
@@ -74,7 +111,7 @@ $(document).ready(function () {
   })
   // REEMPLAZAR CLI
   function agregarCli() {
-    document.getElementById("tablaClientesCli").innerHTML ="<tbody> <tr id='trTabla1'> <td><h3 style='color:gray'>"+cliente +" </h3></td> </tr> </tbody>";
+    document.getElementById("tablaClientesCli").innerHTML =""+cliente+"";
   }
 
   //AGREGAR PROD
@@ -130,7 +167,6 @@ $(document).ready(function () {
           arrayObjeto = [];
         }
         arrayObjeto.splice(i,1);
-        console.log(arrayObjeto);
         reloadTable();
         reloadTotal();
       }
@@ -226,18 +262,18 @@ $(document).ready(function () {
     $(".borrarfila").remove();
     for (i= 0 ; i < arrayObjeto.length ; i++)
     {
-      tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr class='borrarfila' id='borrarfila"+numerofila+"'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <input id='target' value='"+arrayObjeto[i].cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +arrayObjeto[i].id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
+      tablaProductosComp=document.getElementById("tablaProductosComp").innerHTML +="<tr class='borrarfila' id='borrarfila"+numerofila+"'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <input id='target' class='form-control' value='"+arrayObjeto[i].cantidad+"'> </td> <td>"+numerofila+"</td> <td style='display: none'>" +arrayObjeto[i].id +" </td> <td> <button class='btn btn-danger btn-sm btnEliminarComp'><i class='material-icons'>remove_shopping_cart</i></button> </td></tr>";
     }
   }
 
   //modal tabla
   $(document).on("click", "#btnFinalizarComp", function () {
-    console.log(arrayObjeto);
     if(cliente === '' || arrayObjeto == 0){
       alert('Ingrese producto o cliente')
     }else{
       $("#backModal").show();
-      $("#footerModal").html("<p>Nombre del cliente: "+cliente+"</p><p>Total: "+totalPorProducto+"</p>")
+      $("#clienteModal").html("<div class='totalt col-6'><div class='input-group-prepend'><span class='input-group-text'>CLIENTE:</span></div><label id='clienteModalLabel' class='form-control'>"+cliente+"</label></div>");
+      $("#totalModal").html("<div class='d-flex justify-content-end'><div class='totalDivCol'><div class='input-group-prepend'><span class='input-group-text'>TOTAL:</span></div><label id='totalModalLabel' class='form-control'>"+totalPorProducto+"</label></div></div>");
       for (i= 0 ; i < arrayObjeto.length ; i++)
       {
         idModalBody=document.getElementById("idModal").innerHTML +="<tr class='modalCerrar'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <p>"+arrayObjeto[i].cantidad+"</p> </td><td> <p>"+arrayObjeto[i].cantidad * arrayObjeto[i].precio +"</p> </td></tr>";
@@ -263,27 +299,23 @@ $(document).ready(function () {
     if(valordescuento != undefined){    
       valordescuento = (valordescuento*totalPorProducto)/100;
       totalPorProducto = totalPorProducto - valordescuento;
+      document.getElementById("total").innerHTML = totalPorProducto;
     }
-    if(totalPorProducto === 0 || totalPorProducto == NaN || totalPorProducto === ''){
-        alert("Agregue una cantidad de productos correcta")
+    if(isNaN(totalPorProducto)){
+      reloadTotalVacio()
     }else{
       document.getElementById("total").innerHTML = totalPorProducto;
     }
-
   }
 
      //Keyup de descuento
     $(document).on("keyup", "#descuentito", function () {
       valordescuento = parseInt($("#descuentito").val());
       descuento = valordescuento;
-      console.log("valordescuento");
-      reloadTotal(valordescuento);
+      reloadTotal(descuento);
     });
 
-     //Keyup de recargo
-    $(document).on("keyup", "#recargito", function () {
-      valorrecargo = $("#recargito").val();
-      recargo =  valorrecargo;
-      reloadTotal();
-    });
+    function reloadTotalVacio() {
+      document.getElementById("total").innerHTML = '0';
+    }
 });

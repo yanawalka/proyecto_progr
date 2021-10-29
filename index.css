@@ -1,17 +1,27 @@
-.descuento{
+.descuento, .totalt, .clientediv{
     display: flex;
     align-items: center;
-    flex-direction: row;
 }
 
-.descuento>h3{
-    color: gray;
+#total, #tablaClientesCli, #clienteModalLabel, #totalModalLabel {
+    margin-bottom: 0;
 }
 
-.descuento>input{
-    border: none;
-    border-radius: 5px;
-    font-size: 28px;
+.totalDivCol {
+    display: flex;
+    align-items: center;
+    margin-right: 0px;
+}
+
+#totalModalLabel {
+    text-align: center;
+    width: 140px;
+    margin-right: 2px;
+}
+
+#target {
+    text-align: center;
+    width: 80px;
 }
 
 #backModal{
@@ -33,30 +43,19 @@
     border-radius: 8px;
 }
 
-.cerrar{
-    padding-right: 8px;
-    margin-top: 8px;
-    width: 100%;
+#botoncModal, #cerrarDrawer{
+    padding: 8px;
+    margin: 8px;
 }
 
-.tableBody{
-    width: 100%;
-    margin-bottom: 0%;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-around;
+#cerrarDrawer {
+    padding: 8px;
+    margin: 8px;
+    width: 40px;
 }
+
 
 .table{
     text-align: center;
-}
-
-.cerrar>h3{
-    padding-left: 28px;
-    margin-top: 8px;
-}
-
-.cerrar>button{
-    height: 50px;
+    margin-top: 10px;
 }

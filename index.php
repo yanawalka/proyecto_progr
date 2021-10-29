@@ -30,42 +30,10 @@
 
 <body>
 
-<div class="container">
+<div class="container-xl">
     <div>
-            <table class="table" id="tablaClientesCli">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>Nombre de Cliente</th>
-                    </tr>
-                </thead>
-            </table>
-        <div class="descuento">
-            <h3>DESCUENTO:</h3>
-            <input style='margin-left: 15px' id="descuentito" value='0'>
-        </div>
-
-        </div>
-        <div class="d-flex bd-highlight">
-            <div class="p-2 flex-grow-1 bd-highlight">
-                <table class="table">
-                    <thead class="">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Numero</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaProductosComp">
-                    </tbody>
-                </table>
-                <H2>TOTAL:</H2>
-                <p id="total">0</p>
-                <button class="btn btn-danger" id="btnFinalizarComp">Continuar</button>
-            </div>
-
-
+        <div class="d-flex bd-highlight" style="margin-top: 100px">
+        
             <div class="tab-content" id="myTabContent">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -93,7 +61,7 @@
                                                 <th>Marca</th>
                                                 <th>Stock</th>
                                                 <th>Precio</th>
-                                                <th>Acciones</th>
+                                                <th style="width: 48px;">Acciones</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -127,7 +95,52 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="flex-grow-1 bd-highlight" style="margin-left: 10px">
+            <div class="row">
+                <div class="clientediv col-6" style="margin-bottom: 10px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">CLIENTE:</span>
+                    </div>
+                    <label id="tablaClientesCli" class="form-control">SIN CLIENTE</label>
+                </div>
+                <div class="totalt col-6">
+                </div>
+                <div class="descuento col-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">DESCUENTO:</span>
+                    </div>
+                    <input id="descuentito" class="form-control" value='0'>
+                </div>
+                <div class="totalt col-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">TOTAL:</span>
+                    </div>
+                    <label id="total" class="form-control">0</label>
+                </div>
+            </div>
+
+
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead class="">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Numero</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProductosComp">
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success" id="btnFinalizarComp">Continuar</button>
+                </div>
+            </div>
         </div>
+    
     </div>
 </div>
 
@@ -135,28 +148,29 @@
             <div class="drower">
                 <div class="headerModal" >
                     <div class="cerrar d-flex justify-content-between">
-                        <h3 >Detalle de venta</h3>
-                        <button id="cerrarDrawer" class="btn btn-info">X</button>
+                        <h3>TICKET DE VENTA</h3>
+                        <button id="cerrarDrawer" class="btn btn-danger">X</button>
                     </div>
                 </div>
-                <div>
-                    <table class="table" id="idModal">
-                        <thead class="">
+                <div id="clienteModal">
+                </div>
+                <div class="p-3 flex-grow-1 bd-highlight">
+                    <table class="table p-3" id="idModal">
+                        <thead class="thead-light">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Precio por cantidad</th>
+                                <th>NOMBRE</th>
+                                <th>PRECIO</th>
+                                <th>CANTIDAD</th>
+                                <th>SUBTOTAL</th>
                             </tr>
                         </thead>
                         <tbody id="idModalBody">
                         </tbody>
                     </table>
-                </div>
-                <div class="tableBody" id="footerModal">
+                    <div id="totalModal">
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button id="botoncModal" class="cerrar btn btn-info">Finalizar venta</button>
+                    <button id="botoncModal" class="btn btn-success">FINALIZAR VENTA</button>
                 </div>
         </div>
         <div>
