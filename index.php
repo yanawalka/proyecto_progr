@@ -30,8 +30,8 @@
 
 <body>
 
-    <div class="container">
-        <div>
+<div class="container">
+    <div>
             <table class="table" id="tablaClientesCli">
                 <thead class="thead-inverse">
                     <tr>
@@ -62,7 +62,7 @@
                 </table>
                 <H2>TOTAL:</H2>
                 <p id="total">0</p>
-                <button class="btn btn-danger" id="btnFinalizarComp">Finalizar Venta</button>
+                <button class="btn btn-danger" id="btnFinalizarComp">Continuar</button>
             </div>
 
 
@@ -129,11 +129,38 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
-
-
-
+        <div id="backModal">
+            <div class="drower">
+                <div class="headerModal" >
+                    <div class="cerrar d-flex justify-content-between">
+                        <h3 >Detalle de venta</h3>
+                        <button id="cerrarDrawer" class="btn btn-info">X</button>
+                    </div>
+                </div>
+                <div>
+                    <table class="table" id="idModal">
+                        <thead class="">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Precio por cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="idModalBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tableBody" id="footerModal">
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button id="botoncModal" class="cerrar btn btn-info">Finalizar venta</button>
+                </div>
+        </div>
+        <div>
+        </div>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">

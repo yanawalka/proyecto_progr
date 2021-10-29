@@ -1,12 +1,15 @@
 $(document).ready(function () {
+  $("#backModal").hide();
   var total = 0;
   var id, opcion;
   var arrayObjeto = [];
+  console.log(arrayObjeto)
   var fila;
   var precio;
   var recargo=0;
   var descuento=0;
   tablaProductosComp=0
+  var cliente = '';
   var objeto = {
     id: 0,
     nombre: 'nombre',
@@ -15,6 +18,7 @@ $(document).ready(function () {
   };
   var banderita = true;
   var valordescuento = 1;
+  var totalPorProducto = 0;
 
   opcion = 4;
   tablaProductos = $("#tablaProductos").DataTable({
@@ -105,8 +109,6 @@ $(document).ready(function () {
             agregarProd(idv)
           }          
           banderita = true;
-          reloadRecargo();
-          reloadDescuento(); 
       });
     
 //ELIMINAR CAMPOS TABLA PRODUCTOSCOMP
@@ -137,7 +139,9 @@ $(document).ready(function () {
     });
 
   //FINALIZAR
-  $(document).on("click", "#btnFinalizarComp", function () {
+  $(document).on("click", "#botoncModal", function () {
+    $("#backModal").hide();
+
     //CREACION DE CABEZA DE VENTA
     var opcion = 5;
     $.ajax({
@@ -183,7 +187,7 @@ $(document).ready(function () {
                     factura:factura
                   },
                   success: function (data) {
-                    console.log("Compra Finalizada");
+                    location.reload();
                   }
                 })
               },
@@ -226,10 +230,32 @@ $(document).ready(function () {
     }
   }
 
+  //modal tabla
+  $(document).on("click", "#btnFinalizarComp", function () {
+    console.log(arrayObjeto);
+    if(cliente === '' || arrayObjeto == 0){
+      alert('Ingrese producto o cliente')
+    }else{
+      $("#backModal").show();
+      $("#footerModal").html("<p>Nombre del cliente: "+cliente+"</p><p>Total: "+totalPorProducto+"</p>")
+      for (i= 0 ; i < arrayObjeto.length ; i++)
+      {
+        idModalBody=document.getElementById("idModal").innerHTML +="<tr class='modalCerrar'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <p>"+arrayObjeto[i].cantidad+"</p> </td><td> <p>"+arrayObjeto[i].cantidad * arrayObjeto[i].precio +"</p> </td></tr>";
+      }
+    }
+
+  })
+
+  //Cerrar drower
+  $(document).on("click", "#cerrarDrawer", function () {
+    $("#backModal").hide();
+    $(".modalCerrar").remove();
+  })
+
   //FUNCION PARA CARGAR EL TOTAL DE LA VENTA
   function reloadTotal(valordescuento){
     $("total").remove();
-    var totalPorProducto = 0;
+    totalPorProducto = 0;
     for (i= 0 ; i < arrayObjeto.length ; i++)
     {
       totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);

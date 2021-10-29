@@ -13,3 +13,50 @@
     border-radius: 5px;
     font-size: 28px;
 }
+
+#backModal{
+    position: absolute;
+    top: 0;
+    background: rgba(75, 75, 75, 0.452);
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.drower{
+    width: 30%;
+    background: white;
+    border-radius: 8px;
+}
+
+.cerrar{
+    padding-right: 8px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.tableBody{
+    width: 100%;
+    margin-bottom: 0%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.table{
+    text-align: center;
+}
+
+.cerrar>h3{
+    padding-left: 28px;
+    margin-top: 8px;
+}
+
+.cerrar>button{
+    height: 50px;
+}
