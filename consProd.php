@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("America/Argentina/Salta");
 include_once 'conexion.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
@@ -14,11 +15,15 @@ $conexion = $objeto->Conectar();
 // $precio = (isset($_POST['precio'])) ? $_POST['precio'] : '';
 
 $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
+$cliente = (isset($_POST['cliente'])) ? $_POST['cliente'] : '';
 $ventaproid = (isset($_POST['id'])) ? $_POST['id'] : '';
 $ventaprecio = (isset($_POST['precio'])) ? $_POST['precio'] : '';
 $ventacantidad = (isset($_POST['cantidad'])) ? $_POST['cantidad'] : '';
 $ventaorden = (isset($_POST['orden'])) ? $_POST['orden'] : '';
 $factura = (isset($_POST['factura'])) ? $_POST['factura'] : '';
+$descuento = (isset($_POST['valordescuento'])) ? $_POST['valordescuento'] : '';
+$subtotal = (isset($_POST['subtotal'])) ? $_POST['subtotal'] : '';
+$total = (isset($_POST['total'])) ? $_POST['total'] : '';
 
 switch($opcion){
     case 1: //alta
@@ -54,10 +59,10 @@ switch($opcion){
         break;
 
     case 5: //agregarventacabeza
-        $fecha = '2021-10-26 12:12:00';
-        $cliente = 1;
+        $fecha = new DateTime();
+        $fecha = $fecha->format('Y-m-d H:i:sP');
         $caja = 1;
-        $consulta = "INSERT INTO facturasventas (clid, cjid, fvfechahora, fvtotal) VALUES ('$cliente','$caja','$fecha',0)";
+        $consulta = "INSERT INTO facturasventas (clid, cjid, fvfechahora, fvdescuento, fvsubtotal, fvtotal) VALUES ('$cliente','$caja','$fecha',0,0,0)";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
 
@@ -75,17 +80,17 @@ switch($opcion){
         $resultado->execute();        
         break;
 
-    case 7: //actualizarventacabezatotal
-        $total=0;
-        $consulta = "SELECT dcpreciototal FROM detallesventas WHERE fvid='$factura'";
+    case 7: //actualizarventacabeza
+        $consulta = "UPDATE facturasventas SET fvtotal='$total', fvdescuento='$descuento', fvsubtotal='$subtotal', fvtotal='$total'  WHERE fvid='$factura'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
-        while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
-            $total= $total + $fila['dcpreciototal'];
-        }
-        $consulta2 = "UPDATE facturasventas SET fvtotal='$total' WHERE fvid='$factura'";
-        $resultado2 = $conexion->prepare($consulta2);
-        $resultado2->execute();
+        break;
+
+    case 8: //facturagenerica
+        $consulta = "SELECT MAX(fvid) as factura FROM facturasventas";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();        
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;
 }
 

@@ -1,12 +1,11 @@
 $(document).ready(function () {
-  $("#backModal").hide();
   var total = 0;
   var id, opcion;
   var arrayObjeto = [];
   var fila;
   var precio;
   tablaProductosComp=0
-  var cliente = '';
+  var cliente = 'S/C';
   var objeto = {
     id: 0,
     nombre: 'nombre',
@@ -14,8 +13,12 @@ $(document).ready(function () {
     cantidad: 'cantidad',
   };
   var banderita = true;
-  var valordescuento = 1;
+  var valordescuento = 0;
+  var banderitacliente= true;
   var totalPorProducto = 0;
+  var subtotal = 0;
+  var fechadeldia = new Date();
+  var fechadeldia = fechadeldia.toLocaleDateString("es-ES");
 
   opcion = 4;
   tablaProductos = $("#tablaProductos").DataTable({
@@ -101,7 +104,7 @@ $(document).ready(function () {
     });
 
   $(document).on("click", ".btnAgregarCli", function () {
-
+    banderitacliente=false;
     fila = $(this).closest("tr");
     id = parseInt(fila.find("td:eq(0)").text());
     nombre = fila.find("td:eq(1)").text();
@@ -176,16 +179,19 @@ $(document).ready(function () {
 
   //FINALIZAR
   $(document).on("click", "#botoncModal", function () {
-    $("#backModal").hide();
-
+    $("#backModalDos").css('display', 'flex');
     //CREACION DE CABEZA DE VENTA
+    if(banderitacliente){  
+      clienteId=0;
+    }
     var opcion = 5;
     $.ajax({
       url:"consProd.php",
       type:"POST",
       datatype:"JSON",
       data: {
-        opcion:opcion,
+        cliente:clienteId,
+        opcion:opcion
       },
       success: function (data) {
         //CREACION DE DETALLE DE VENTA
@@ -209,10 +215,10 @@ $(document).ready(function () {
                 precio:precio,
                 cantidad:cantidad,
                 orden:orden,
-                factura:factura
+                factura:factura,
               },
               success: function (data) {
-                //ACTUALIZACION DEL TOTAL DE LA CABEZA DE LA VENTA
+                //ACTUALIZACION DE LA CABEZA DE LA VENTA
                 opcion = 7;
                 $.ajax({
                   url: "consProd.php",
@@ -220,10 +226,13 @@ $(document).ready(function () {
                   datatype: "JSON",
                   data: {
                     opcion:opcion,
-                    factura:factura
+                    factura:factura,
+                    valordescuento:valordescuento,
+                    subtotal:subtotal,
+                    total: totalPorProducto
                   },
                   success: function (data) {
-                    location.reload();
+                    // location.reload();
                   }
                 })
               },
@@ -233,6 +242,13 @@ $(document).ready(function () {
       }
     });
 
+  });
+
+  //IMPRIMIR
+  $(document).on("click", "#botonImprimirModal", function () {
+    $("#backModal").hide();
+    $("#backModalDos").hide();
+    location.reload();
   });
 
   //Keyup de cantidad
@@ -268,16 +284,40 @@ $(document).ready(function () {
 
   //modal tabla
   $(document).on("click", "#btnFinalizarComp", function () {
-    if(cliente === '' || arrayObjeto == 0){
-      alert('Ingrese producto o cliente')
+    if(arrayObjeto == 0){
+      alert('Ingrese los productos')
     }else{
-      $("#backModal").show();
+
+      $("#backModal").css('display', 'flex');;
+
+      //facturagenerica
+      opcion=8;
+      $.ajax({
+        url: "consProd.php",
+        type: "POST",
+        datatype: "JSON",
+        data: {
+          opcion:opcion,
+        },
+        success: function (data) {
+          resultFactura = JSON.parse(data);
+          facturaGenerica = resultFactura[0].factura;
+          facturaGenerica++;
+          console.log(facturaGenerica);
+          $("#facturaModal").html("<div class='totalt col-6'><div class='input-group-prepend'><span class='input-group-text'>FACTURA:</span></div><label id='facturaModalLabel' class='form-control'>"+facturaGenerica+"</label></div>");
+        }
+      });
+      $("#fechaDelDiaModal").html("<div class='d-flex justify-content-end p-2'><div class='input-group-prepend'><span class='input-group-text' id='fechaDelDiaModalSpan'>"+fechadeldia+"</span></div></div>");
       $("#clienteModal").html("<div class='totalt col-6'><div class='input-group-prepend'><span class='input-group-text'>CLIENTE:</span></div><label id='clienteModalLabel' class='form-control'>"+cliente+"</label></div>");
+      $("#descuentoModal").html("<div class='d-flex justify-content-prepend'><div class='descuentoDivCol'><div class='input-group-prepend'><span class='input-group-text'>DESCUENTO:</span></div><label id='descuentoModalLabel' class='form-control'>"+valordescuento+"%</label></div></div>");
+      $("#subTotalModal").html("<div class='d-flex justify-content-end'><div class='subTotalDivCol'><div class='input-group-prepend'><span class='input-group-text'>SUBTOTAL:</span></div><label id='subTotalModalLabel' class='form-control'>"+subtotal+"</label></div></div>");
       $("#totalModal").html("<div class='d-flex justify-content-end'><div class='totalDivCol'><div class='input-group-prepend'><span class='input-group-text'>TOTAL:</span></div><label id='totalModalLabel' class='form-control'>"+totalPorProducto+"</label></div></div>");
+      
       for (i= 0 ; i < arrayObjeto.length ; i++)
       {
         idModalBody=document.getElementById("idModal").innerHTML +="<tr class='modalCerrar'><td>" +arrayObjeto[i].nombre +" </td> <td>" +arrayObjeto[i].precio +"</td><td> <p>"+arrayObjeto[i].cantidad+"</p> </td><td> <p>"+arrayObjeto[i].cantidad * arrayObjeto[i].precio +"</p> </td></tr>";
       }
+
     }
 
   })
@@ -288,24 +328,42 @@ $(document).ready(function () {
     $(".modalCerrar").remove();
   })
 
+  $(document).on("click", "#cerrarDrawerVenta", function () {
+    $("#backModal").hide();
+    location.reload();
+  })
+
+  //Cerrar drowerDos
+  $(document).on("click", "#cerrarDrawerImprimir", function () {
+    $("#backModal").hide();
+    $("#backModalDos").hide();
+    location.reload();
+  })
   //FUNCION PARA CARGAR EL TOTAL DE LA VENTA
   function reloadTotal(valordescuento){
     $("total").remove();
     totalPorProducto = 0;
+    subtotal=0;
     for (i= 0 ; i < arrayObjeto.length ; i++)
     {
       totalPorProducto = totalPorProducto + (arrayObjeto[i].precio * arrayObjeto[i].cantidad);
     }
-    if(valordescuento != undefined){    
-      valordescuento = (valordescuento*totalPorProducto)/100;
-      totalPorProducto = totalPorProducto - valordescuento;
-      document.getElementById("total").innerHTML = totalPorProducto;
+    if (valordescuento != undefined) {
+    valordescuento = (valordescuento*totalPorProducto)/100;
+    subtotal = totalPorProducto;
+    totalPorProducto = totalPorProducto - valordescuento;
+    document.getElementById("total").innerHTML = totalPorProducto;
     }
+    else {
+      subtotal = totalPorProducto;
+    }
+
     if(isNaN(totalPorProducto)){
       reloadTotalVacio()
     }else{
       document.getElementById("total").innerHTML = totalPorProducto;
     }
+
   }
 
      //Keyup de descuento

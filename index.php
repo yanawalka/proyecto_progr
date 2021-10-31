@@ -103,7 +103,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">CLIENTE:</span>
                     </div>
-                    <label id="tablaClientesCli" class="form-control">SIN CLIENTE</label>
+                    <label id="tablaClientesCli" class="form-control">S/C</label>
                 </div>
                 <div class="totalt col-6">
                 </div>
@@ -147,9 +147,15 @@
         <div id="backModal">
             <div class="drower">
                 <div class="headerModal" >
-                    <div class="cerrar d-flex justify-content-between">
-                        <h3>TICKET DE VENTA</h3>
+                    <div class="d-flex justify-content-between">
+                        <h3 class="tituloTicket">TICKET DE VENTA</h3>
                         <button id="cerrarDrawer" class="btn btn-danger">X</button>
+                    </div>
+                </div>
+                <div class="headerDosModal">
+                    <div id="facturaModal">
+                    </div>
+                    <div id="fechaDelDiaModal">
                     </div>
                 </div>
                 <div id="clienteModal">
@@ -161,20 +167,50 @@
                                 <th>NOMBRE</th>
                                 <th>PRECIO</th>
                                 <th>CANTIDAD</th>
-                                <th>SUBTOTAL</th>
+                                <th>SUBTOTAL C/U</th>
                             </tr>
                         </thead>
                         <tbody id="idModalBody">
                         </tbody>
                     </table>
-                    <div id="totalModal">
+                    <div id="subTotalModal">
+                    </div>
+                    <div class="footerModal">
+                        <div id="descuentoModal">
+                        </div>
+                        <div id="totalModal">
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <button id="botoncModal" class="btn btn-success">FINALIZAR VENTA</button>
+                <div class="footerModalDos">
+                    <div class="d-flex justify-content-end">
+                        <button id="cerrarDrawerVenta" class="btn btn-danger">CANCELAR VENTA</button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button id="botoncModal" class="btn btn-success">FINALIZAR VENTA</button>
+                    </div>
                 </div>
+            </div>
         </div>
-        <div>
+        <div id="backModalDos">
+            <div class="drower">
+                <div class="headerModal" >
+                    <div class="d-flex justify-content-prepend">
+                        <h2 class="tituloCompraEfectuada">Compra efectuada</h2>
+                    </div>
+                    <p class="parrafoCompraEfectuada">¿Deseas imprimir la compra?</p>
+                </div>
+                <div class="footerModalTres">
+                    <div class="d-flex justify-content-prepend">
+                        <button id="cerrarDrawerImprimir" class="btn btn-danger">DESCARTAR</button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button id="botonImprimirModal" class="btn btn-success">IMPRIMIR</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">

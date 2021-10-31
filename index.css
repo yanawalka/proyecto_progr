@@ -3,8 +3,17 @@
     align-items: center;
 }
 
-#total, #tablaClientesCli, #clienteModalLabel, #totalModalLabel {
+#total, #tablaClientesCli, #clienteModalLabel, #totalModalLabel, #subTotalModalLabel, #facturaModalLabel, #descuentoModalLabel {
     margin-bottom: 0;
+}
+
+#fechaDelDiaModalSpan {
+    padding: 10px;
+    margin: 10px;
+}
+
+#facturaModalLabel, #clienteModalLabel {
+    width: auto;
 }
 
 .totalDivCol {
@@ -13,9 +22,22 @@
     margin-right: 0px;
 }
 
-#totalModalLabel {
+.subTotalDivCol {
+    display: flex;
+    align-items: center;
+    margin-right: 0px;
+    margin-bottom: 10px;
+}
+
+.descuentoDivCol {
+    display: flex;
+    align-items: center;
+    margin-left: 0px;
+}
+
+#totalModalLabel, #subTotalModalLabel {
     text-align: center;
-    width: 140px;
+    width: 130px;
     margin-right: 2px;
 }
 
@@ -30,8 +52,21 @@
     background: rgba(75, 75, 75, 0.452);
     height: 100%;
     width: 100%;
+    z-index: 99998;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#backModalDos{
+    position: absolute;
+    top: 0;
+    background: rgba(75, 75, 75, 0.452);
+    height: 100%;
+    width: 100%;
     z-index: 99999;
-    display: flex;
+    display: none;
     align-items: center;
     flex-direction: column;
     justify-content: center;
@@ -43,7 +78,7 @@
     border-radius: 8px;
 }
 
-#botoncModal, #cerrarDrawer{
+#botoncModal, #cerrarDrawerVenta, #cerrarDrawerImprimir, #botonImprimirModal{
     padding: 8px;
     margin: 8px;
 }
@@ -58,4 +93,47 @@
 .table{
     text-align: center;
     margin-top: 10px;
+}
+
+.tituloTicket {
+    padding: 8px;
+    margin: 8px;
+}
+
+.headerDosModal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footerModal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footerModalDos {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 2px;
+    padding: 2px;
+}
+
+.footerModalTres {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.tituloCompraEfectuada {
+    padding: 8px;
+    margin: 8px;
+}
+
+.parrafoCompraEfectuada {
+    padding: 8px;
+    margin: 8px;
+    text-align: center;
+    font-size: 23px;
 }
