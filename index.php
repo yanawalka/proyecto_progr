@@ -202,7 +202,7 @@
                 </div>
                 <div class="footerModalTres">
                     <div class="d-flex justify-content-prepend">
-                        <button id="cerrarDrawerImprimir" class="btn btn-danger">DESCARTAR</button>
+                        <button id="cerrarDrawerImprimir" class="btn btn-danger">CONTINUAR SIN IMPRIMIR</button>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button id="botonImprimirModal" class="btn btn-success">IMPRIMIR</button>
