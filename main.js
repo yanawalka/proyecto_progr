@@ -219,7 +219,6 @@ $(document).ready(function () {
               },
               success: function (data) {
                 //ACTUALIZACION DE LA CABEZA DE LA VENTA
-                opcion = 7;
                 $.ajax({
                   url: "consProd.php",
                   type: "POST",
@@ -232,7 +231,7 @@ $(document).ready(function () {
                     total: totalPorProducto
                   },
                   success: function (data) {
-                    // location.reload();
+                    console.log(data)
                   }
                 })
               },

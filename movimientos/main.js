@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  tablaProductosComp=0
+  var tablaProductosComp=0
+  var saldoTotal = 0;
   var fechadeldia = new Date();
   var fechadeldia = fechadeldia.toLocaleDateString("es-ES");
   var currentdate = new Date(); 
@@ -16,6 +17,7 @@ $(document).ready(function () {
     cjmontoincial: 0,
     cjsaldo: 0,
   }
+
   $("#inputCierre").prop("readonly", true);
   $('#fechaHora').val(datetime);
   $('#fechaHora').prop("readonly", true);
@@ -36,7 +38,6 @@ function reloadApertura(){
     },
     success: function (data) {
     result = JSON.parse(data);
-    console.log(result)
     caja.cjid = result[0].cjid;
     caja.cjcierre = result[0].cjcierre;
     caja.cjmontoincial = result[0].cjmontoincial ;
@@ -176,9 +177,42 @@ function reloadApertura(){
       }
       ],
     });
+    $.ajax({
+      url:"consCaja.php",
+      type:"POST",
+      datatype:"JSON",
+      data: {
+        opcion: opcion,
+      },
+      success: function (data) {
+        result = JSON.parse(data);
+        totalIngreso = 0;
+        totalEgreso = 0;
+        saldoParcial = 0;
+        saldoTotal = 0;
+          for (let i = 0; i < result.length; i++) {
+            if(result[i].movtipo == 1){
+              totalIngreso = + result[i].movdinero + totalIngreso;
+            }else{
+              totalEgreso = + result[i].movdinero + totalEgreso;
+            }
+          }
+        saldoParcial = totalIngreso - totalEgreso;
+
+        if(saldoParcial<0){
+          saldoTotal = + caja.cjmontoincial + saldoParcial
+        }
+        if(saldoParcial >= 0){
+          saldoTotal = + caja.cjmontoincial + saldoParcial
+        }
+        tipo =  $('.inputSaldo').val(saldoTotal);
+        
+    }
+  })
   }
 
   $(document).on("click", ".btnEliminarMovimiento", function () {
+    opcion = 6
     fila = $(this).closest("tr");
     movid = fila.find("td:eq(0)").text();
     $.ajax({
@@ -187,17 +221,14 @@ function reloadApertura(){
       datatype:"JSON",
       data: {
         opcion: opcion,
-        tipo: tipo,
-        dinero:dinero,
-        descripcion:descripcion,
-        cjid: caja.cjid
+        movid: movid,
       },
       success: function (data) {
-      console.log(data);
-      $('#tablaMovimientos').DataTable().destroy();
-      tablaMovimientos();
+        $('#tablaMovimientos').DataTable().destroy();
+        tablaMovimientos();
     }
   })
+})
 
   $(document).on("click", "#cerrarArqueo", function () {
     $("#arqueoCaja").css('display', 'none');

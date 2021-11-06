@@ -15,6 +15,7 @@ $cjcierre = (isset($_POST['cjcierre'])) ? $_POST['cjcierre'] : '';
 $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : '';
 $dinero = (isset($_POST['dinero'])) ? $_POST['dinero'] : '';
 $descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
+$movid = (isset($_POST['movid'])) ? $_POST['movid'] : '';
 
 
 // Saldo de caja = Monto inicial + totting_cj – totegr_cj + movimientos
@@ -24,14 +25,14 @@ $descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
 switch($opcion){//Consulta por estado de caja
     case 1:   
         $date = date("Y-m-d");
-        // $date = '2021-11-01';
+        $date = '2021-11-06';
         $consulta = "SELECT * FROM cajas WHERE cjfecha = '$date'  ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();        
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         $numerito = count($data);
         if ($numerito == 0) {
-            $consulta = "INSERT INTO cajas (cjfecha, cjmontoincial, cjcierre, cjsaldo, cjtoting, cjtotegr, cjfechahoracierre, empid) VALUES (current_date(),0 , 0 , 0 , 0 , 0 , 0 , 1);";
+            $consulta = "INSERT INTO cajas (cjfecha, cjmontoincial, cjcierre, cjsaldo, cjtoting, cjtotegr, cjfechahoracierre, empid) VALUES ('2021-11-06' ,0 , 0 , 0 , 0 , 0 , 0 , 1);";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
         
@@ -69,6 +70,13 @@ switch($opcion){//Consulta por estado de caja
 
     case 5:
         $consulta = "INSERT INTO movimientos (movtipo, movdinero, movdesc, cjid) VALUES ('$tipo', '$dinero', '$descripcion', '$cjid')";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();        
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        break;
+
+    case 6:
+        $consulta = "DELETE FROM movimientos WHERE movid = '$movid'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();        
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
