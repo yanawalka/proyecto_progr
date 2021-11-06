@@ -172,11 +172,32 @@ function reloadApertura(){
         { data: "movdinero" },
         { data: "movdesc" },
         { defaultContent:
-          "<div class='text-center'><button class='btn btn-danger btn-sm btnAgregarVenta'><i class='material-icons'>remove_shopping_cart</i></button></div>",
+          "<div class='text-center'><button class='btn btn-danger btn-sm btnEliminarMovimiento'><i class='material-icons'>remove_shopping_cart</i></button></div>",
       }
       ],
     });
   }
+
+  $(document).on("click", ".btnEliminarMovimiento", function () {
+    fila = $(this).closest("tr");
+    movid = fila.find("td:eq(0)").text();
+    $.ajax({
+      url:"consCaja.php",
+      type:"POST",
+      datatype:"JSON",
+      data: {
+        opcion: opcion,
+        tipo: tipo,
+        dinero:dinero,
+        descripcion:descripcion,
+        cjid: caja.cjid
+      },
+      success: function (data) {
+      console.log(data);
+      $('#tablaMovimientos').DataTable().destroy();
+      tablaMovimientos();
+    }
+  })
 
   $(document).on("click", "#cerrarArqueo", function () {
     $("#arqueoCaja").css('display', 'none');
