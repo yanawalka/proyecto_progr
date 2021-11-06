@@ -1,51 +1,10 @@
-.descuento, .totalt, .clientediv{
-    display: flex;
-    align-items: center;
+body{
+    padding: 2%;
 }
 
-#total, #tablaClientesCli, #clienteModalLabel, #totalModalLabel, #subTotalModalLabel, #facturaModalLabel, #descuentoModalLabel {
-    margin-bottom: 0;
-}
-
-#fechaDelDiaModalSpan {
-    padding: 10px;
-    margin: 10px;
-}
-
-#facturaModalLabel, #clienteModalLabel {
-    width: auto;
-}
-
-.totalDivCol {
-    display: flex;
-    align-items: center;
-    margin-right: 0px;
-}
-
-.subTotalDivCol {
-    display: flex;
-    align-items: center;
-    margin-right: 0px;
-    margin-bottom: 10px;
-}
-
-.descuentoDivCol {
-    display: flex;
-    align-items: center;
-    margin-left: 0px;
-}
-
-#totalModalLabel, #subTotalModalLabel {
+td{
     text-align: center;
-    width: 130px;
-    margin-right: 2px;
 }
-
-#target {
-    text-align: center;
-    width: 80px;
-}
-
 #backModal{
     position: absolute;
     top: 0;
@@ -53,87 +12,77 @@
     height: 100%;
     width: 100%;
     z-index: 99998;
-    display: none;
+    display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-}
-
-#backModalDos{
-    position: absolute;
-    top: 0;
-    background: rgba(75, 75, 75, 0.452);
-    height: 100%;
-    width: 100%;
-    z-index: 99999;
     display: none;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .drower{
     width: 30%;
     background: white;
     border-radius: 8px;
+    padding: 1%;
 }
 
-#botoncModal, #cerrarDrawerVenta, #cerrarDrawerImprimir, #botonImprimirModal{
-    padding: 8px;
-    margin: 8px;
-}
-
-#cerrarDrawer {
-    padding: 8px;
-    margin: 8px;
-    width: 40px;
-}
-
-
-.table{
-    text-align: center;
-    margin-top: 10px;
-}
-
-.tituloTicket {
-    padding: 8px;
-    margin: 8px;
-}
-
-.headerDosModal {
+.cajaInputs{
     display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.inputBox{
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    align-self: flex-end;
+
 }
 
-.footerModal {
+#inputApertura{
+    width: 100px;
+}
+
+.inputSaldo{
+    cursor: not-allowed;
+}
+
+#inputCierre{
+    width: 40%;
+}
+
+.saldoBox{
     display: flex;
+    width: 30%;
+}
+
+#cajaDiaria{
+    display: none;
+}
+
+#arqueoCaja{
+    position: absolute;
+    top: 0;
+    background: rgba(75, 75, 75, 0.452);
+    height: 100%;
+    width: 100%;
+    z-index: 99998;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
+    display: none;
 }
 
-.footerModalDos {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin: 2px;
-    padding: 2px;
+.drowerArqueo{
+    width: 90%;
+    height: 100%;
+    background: white;
+    border-radius: 8px;
+    padding: 1%;
 }
 
-.footerModalTres {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-
-.tituloCompraEfectuada {
-    padding: 8px;
-    margin: 8px;
-}
-
-.parrafoCompraEfectuada {
-    padding: 8px;
-    margin: 8px;
-    text-align: center;
-    font-size: 23px;
+.inputMovimiento{
+    /* width: 10%; */
 }

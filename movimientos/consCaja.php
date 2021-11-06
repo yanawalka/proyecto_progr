@@ -12,6 +12,14 @@ $cjid = (isset($_POST['cjid'])) ? $_POST['cjid'] : '';
 $cjmontoincial = (isset($_POST['cjmontoincial'])) ? $_POST['cjmontoincial'] : '';
 $cjsaldo = (isset($_POST['cjsaldo'])) ? $_POST['cjsaldo'] : '';
 $cjcierre = (isset($_POST['cjcierre'])) ? $_POST['cjcierre'] : '';
+$tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : '';
+$dinero = (isset($_POST['dinero'])) ? $_POST['dinero'] : '';
+$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
+
+
+// Saldo de caja = Monto inicial + totting_cj – totegr_cj + movimientos
+
+
 
 switch($opcion){//Consulta por estado de caja
     case 1:   
@@ -47,6 +55,20 @@ switch($opcion){//Consulta por estado de caja
     case 3:  
 
         $consulta = "SELECT * FROM cajas";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();        
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        break;
+    
+    case 4: 
+        $consulta = "SELECT movid, movtipo, movdinero, movdesc FROM `movimientos` INNER JOIN cajas ON empid = 1 AND cjfecha = CURRENT_DATE";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();        
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        break;
+
+    case 5:
+        $consulta = "INSERT INTO movimientos (movtipo, movdinero, movdesc, cjid) VALUES ('$tipo', '$dinero', '$descripcion', '$cjid')";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();        
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
