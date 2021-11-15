@@ -244,8 +244,10 @@ $(document).ready(function () {
   });
 
   //IMPRIMIR
-  $(document).on("click", ".enviar", function () {
-
+  $(document).on("click", "#botonImprimirModal", function () {
+    $("#backModal").hide();
+    $("#backModalDos").hide();
+    location.reload();
   });
 
   //Keyup de cantidad
