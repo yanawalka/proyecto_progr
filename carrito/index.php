@@ -32,42 +32,91 @@
 
 <div class="container-xl">
     <div>
-        <div class="d-flex bd-highlight" style="margin-top: 100px">
+    <div class="d-flex bd-highlight" style="margin-top: 100px">
         
-            <div class="tab-content" id="myTabContent">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                            type="button" role="tab" aria-controls="home" aria-selected="true">PRODUCTOS</button>
-                    </li>
-                </ul>
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="p-2 flex-grow-1 bd-highlight">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table id="tablaProductos"
-                                        class="table table-striped table-bordered table-condensed" style="width:100%">
+        <div class="tab-content" id="myTabContent">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        type="button" role="tab" aria-controls="home" aria-selected="true"> BEBIDAS</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false">COMIDA RAPIDA</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="plato-tab" data-bs-toggle="tab" data-bs-target="#plato"
+                        type="button" role="tab" aria-controls="plato" aria-selected="false">COMIDA AL PLATO</button>
+                </li>
+            </ul>
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tablaProductos"
+                                    class="table table-striped table-bordered table-condensed" style="width:100%">
 
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>Codigo</th>
-                                                <th>Nombre</th>
-                                                <th>Marca</th>
-                                                <th>Stock</th>
-                                                <th>Precio</th>
-                                                <th style="width: 48px;">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th style="width: 48px;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tablaProductosRapidos" class="table table-striped table-bordered table-condensed"
+                                    style="width:100%">
 
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th style="width: 48px;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="plato" role="tabpanel" aria-labelledby="plato-tab">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tablaProductosPlato" class="table table-striped table-bordered table-condensed"
+                                    style="width:100%">
+
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th style="width: 48px;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
             <div class="flex-grow-1 bd-highlight" style="margin-left: 10px">
             <div class="row">

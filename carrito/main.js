@@ -19,89 +19,53 @@ $(document).ready(function () {
   var subtotal = 0;
   var fechadeldia = new Date();
   var fechadeldia = fechadeldia.toLocaleDateString("es-ES");
+  reloadProductTable(3,  "#tablaProductos");
+  reloadProductTable(2,  "#tablaProductosRapidos");
+  reloadProductTable(1,  "#tablaProductosPlato");
 
-  opcion = 4;
-  tablaProductos = $("#tablaProductos").DataTable({
-      language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-        "infoFiltered": "(Filtrado de _MAX_ total Productos)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Productos",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-          }
-      },
-      ajax: {
-        url: "consProd.php",
-        method: "POST", //usamos el metodo POST
-        data: { opcion: opcion }, //enviamos opcion 4 para que haga un SELECT
-        dataSrc: "",
-      },
-      columns: [
-        { data: "proid" },
-        { data: "procodigo" },
-        { data: "pronombre" },
-        { data: "maid" },
-        { data: "prostockactual" },
-        { data: "proprecio" },
-        { defaultContent:
-            "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnAgregarVenta'><i class='material-icons'>add_shopping_cart</i></button>",
+
+  function reloadProductTable(opcion, name) {
+    opcion = opcion;
+    tablaName = name;
+    tablaProductos = $(tablaName).DataTable({
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+          "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Productos",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+            }
         },
-
-      ],
-    });
-
-  opcion = 4;
-  tablaPersonas = $("#tablaPersonas").DataTable({
-      language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Clientes",
-        "infoFiltered": "(Filtrado de _MAX_ total Cliente)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Clientes",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-      },
-      ajax: {
-        url: "consCliente.php",
-        method: "POST", //usamos el metodo POST
-        data: { opcion: opcion }, //enviamos opcion 4 para que haga un SELECT
-        dataSrc: "",
-      },
-      columns: [
-        { data: "clid" },
-        { data: "clnom" },
-        { data: "clemail" },
-        { data: "cldire" },
-        { data: "cltele" },
-        { defaultContent:
-            "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnAgregarCli'><i class='material-icons'>done</i></button>",
+        ajax: {
+          url: "consProd.php",
+          method: "POST", //usamos el metodo POST
+          data: { opcion: opcion }, //enviamos opcion 4 para que haga un SELECT
+          dataSrc: "",
         },
-
-      ],
-    });
+        columns: [
+          { data: "proid" },
+          { data: "pronombre" },
+          { data: "proprecio" },
+          { defaultContent:
+              "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnAgregarVenta'><i class='material-icons'>add_shopping_cart</i></button>",
+          },
+  
+        ],
+      });
+  }
+ 
 
   $(document).on("click", ".btnAgregarCli", function () {
     banderitacliente=false;
@@ -123,8 +87,8 @@ $(document).ready(function () {
   $(document).on("click", ".btnAgregarVenta", function () {
         fila = $(this).closest("tr");
         idv = parseInt(fila.find("td:eq(0)").text());
-        nombre = fila.find("td:eq(2)").text();
-        precio = parseInt(fila.find("td:eq(5)").text());
+        nombre = fila.find("td:eq(1)").text();
+        precio = parseInt(fila.find("td:eq(2)").text());
 
           objeto = {
             id: idv,
